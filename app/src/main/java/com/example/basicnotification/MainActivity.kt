@@ -9,15 +9,25 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Button
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.basicnotification.data.TopicsService.Companion.BASEBALL_TOPIC
+import com.example.basicnotification.data.TopicsService.Companion.BASKETBALL_TOPIC
+import com.example.basicnotification.data.TopicsService.Companion.FOOTBALL_TOPIC
 import com.example.basicnotification.ui.theme.BasicNotificationTheme
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.HiltAndroidApp
@@ -46,7 +56,8 @@ class MainActivity : ComponentActivity() {
         // Sol·licita el permís de notificació
         requestNotificationPermission()
 
-        val extras = intent.extras // extras es un Bundle que contiene los datos adicionales del intent que se ha lanzado para iniciar la actividad actual
+        val extras =
+            intent.extras // extras es un Bundle que contiene los datos adicionales del intent que se ha lanzado para iniciar la actividad actual
 
         if (extras != null) {
             val message = extras.getString("example1")
@@ -63,10 +74,11 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             BasicNotificationTheme {
+                val mainViewModel: MainViewModel = hiltViewModel()
+
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
+                        modifier = Modifier.padding(innerPadding), mainViewModel
                     )
                 }
             }
@@ -102,17 +114,40 @@ class MainActivity : ComponentActivity() {
 
 
 @Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
+fun Greeting(modifier: Modifier = Modifier, viewModel: MainViewModel) {
+    Column(
+        modifier = modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
+    ) {
+
+        Button(onClick = {
+            viewModel.subscribeToTopic(FOOTBALL_TOPIC)
+
+        }) {
+            Text(text = "Subscribe to football")
+
+        }
+        Spacer(modifier = Modifier.padding(8.dp))
+
+        Button(onClick = {
+            viewModel.subscribeToTopic(BASKETBALL_TOPIC)
+
+        }) {
+            Text(text = "Subscribe to basketball")
+
+        }
+        Spacer(modifier = Modifier.padding(8.dp))
+
+        Button(onClick = {
+            viewModel.subscribeToTopic(BASEBALL_TOPIC)
+
+        }) {
+            Text(text = "Subscribe to baseball")
+
+        }
+
+
+    }
+
 }
 
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    BasicNotificationTheme {
-        Greeting("Android")
-    }
-}
