@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">BasicNotification</string>
+    <string name="default_channel" translatable="false">generic</string>
 </resources>
