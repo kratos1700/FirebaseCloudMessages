@@ -5,7 +5,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.basicnotification.Greeting
+import com.example.basicnotification.PrincipalScreen
 import com.example.basicnotification.MainViewModel
 import com.example.basicnotification.firestore.ui.FirestoreScreen
 
@@ -19,7 +19,7 @@ fun AppNavigation(
     NavHost(navController = navController,
         startDestination = AppScreens.Greeting.ruta){
         composable(AppScreens.Greeting.ruta){
-            Greeting(navController,mainViewModel)
+            PrincipalScreen(navController,mainViewModel)
         }
         composable(AppScreens.FirestoreScreen.ruta){
          FirestoreScreen(navController =navController)

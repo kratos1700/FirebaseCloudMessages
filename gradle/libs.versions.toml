@@ -19,6 +19,7 @@ daggerHiltNav = "1.0.0"
 firebaseMessaging = "24.0.0"
 firebaseBom = "33.1.2"
 googleGmsGoogleServices = "4.4.2"
+firebaseFirestore = "25.0.0"
 
 
 
@@ -47,6 +48,8 @@ com-google-dagger-navigation = { group = "androidx.hilt", name = "hilt-navigatio
 #Firebase Messaging
 firebase-messaging = { group = "com.google.firebase", name = "firebase-messaging", version.ref = "firebaseMessaging" }
 firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
+#Firebase Firestore
+firebase-firestore = { group = "com.google.firebase", name = "firebase-firestore", version.ref = "firebaseFirestore" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

@@ -70,9 +70,10 @@ dependencies {
 
     //Firebase Messaging
     implementation(libs.firebase.messaging)
-
-   // implementation (platform("com.google.firebase:firebase-bom:32.3.1"))
-    implementation (platform(libs.firebase.bom))
+    //Firebase Firestore
+    implementation(libs.firebase.firestore)
+    // implementation (platform("com.google.firebase:firebase-bom:32.3.1"))
+    implementation(platform(libs.firebase.bom))
 
 
 
