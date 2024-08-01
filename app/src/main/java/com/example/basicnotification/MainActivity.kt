@@ -1,5 +1,6 @@
 package com.example.basicnotification
 
+import android.annotation.SuppressLint
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
@@ -15,27 +16,28 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavHostController
+import com.example.basicnotification.core.AppNavigation
 import com.example.basicnotification.data.TopicsService.Companion.BASEBALL_TOPIC
 import com.example.basicnotification.data.TopicsService.Companion.BASKETBALL_TOPIC
 import com.example.basicnotification.data.TopicsService.Companion.FOOTBALL_TOPIC
 import com.example.basicnotification.ui.theme.BasicNotificationTheme
 import dagger.hilt.android.AndroidEntryPoint
-import dagger.hilt.android.HiltAndroidApp
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     private lateinit var requestPermissionLauncher: ActivityResultLauncher<String>
 
+    @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -76,10 +78,9 @@ class MainActivity : ComponentActivity() {
             BasicNotificationTheme {
                 val mainViewModel: MainViewModel = hiltViewModel()
 
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        modifier = Modifier.padding(innerPadding), mainViewModel
-                    )
+                Scaffold(modifier = Modifier.fillMaxSize()) { //innerPadding ->
+                  //  Greeting(modifier = Modifier.padding(innerPadding), mainViewModel)
+                    AppNavigation()
                 }
             }
         }
@@ -114,9 +115,9 @@ class MainActivity : ComponentActivity() {
 
 
 @Composable
-fun Greeting(modifier: Modifier = Modifier, viewModel: MainViewModel) {
+fun Greeting(navController: NavHostController, viewModel: MainViewModel) {
     Column(
-        modifier = modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
 
@@ -143,6 +144,18 @@ fun Greeting(modifier: Modifier = Modifier, viewModel: MainViewModel) {
 
         }) {
             Text(text = "Subscribe to baseball")
+
+        }
+
+
+
+        Spacer(modifier = Modifier.padding(28.dp))
+
+        OutlinedButton(onClick = {
+            navController.navigate("firestore_screen")
+
+        }) {
+            Text(text = "Navegate to Firebase Firestore")
 
         }
 
